@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>中国福利彩票｜大广赛</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f3f3f3;
+    font-family: "微软雅黑", "PingFang SC", sans-serif;
+    overflow: hidden;
+  }
+
+  .ad {
+    width: 375px;
+    height: 667px;
+    background: #fff;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+
+  .start {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #d9251d, #ff6b6b);
+    transition: all 0.5s ease;
+  }
+  .start button {
+    padding: 16px 48px;
+    background: #fff;
+    color: #d9251d;
+    border: none;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+  .start button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  }
+  .start button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .theme-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #fff2f2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    display: none;
+    padding: 0 20px;
+    text-align: center;
+    animation: fadeIn 0.5s ease forwards;
+  }
+  .theme-bg p {
+    font-size: 26px;
+    margin-top: 15px;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  .choice-box {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    z-index: 10;
+    padding: 0 20px;
+    animation: fadeIn 0.5s ease forwards 0.2s;
+    opacity: 0;
+  }
+  .choice-box button {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    width: 220px;
+    text-align: center;
+  }
+  .yes-btn {
+    background: #d9251d;
+    color: #fff;
+  }
+  .yes-btn:hover {
+    background: #c01f18;
+    transform: translateY(-2px);
+  }
+  .no-btn {
+    background: #666;
+    color: #fff;
+  }
+  .no-btn:hover {
+    background: #555;
+    transform: translateY(-2px);
+  }
+  .choice-box button:active {
+    transform: translateY(0);
+  }
+
+  .result-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 15;
+    cursor: pointer;
+    display: none;
+    padding: 0 20px;
+    animation: upIn 0.6s ease forwards;
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  .end-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #fdf3f3;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    cursor: pointer;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .end-gray {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #f7f7f7;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    padding: 0 30px;
+    text-align: center;
+    line-height: 1.8;
+    color: #444;
+    cursor: pointer;
+  }
+
+  .end-red {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, #fff2f2, #ffeaea);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    padding: 0 30px;
+    text-align: center;
+    line-height: 1.4;
+    color: #333;
+    cursor: pointer;
+  }
+
+  .bottom-text {
+    position: absolute;
+    left: 0;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #d9251d;
+    line-height: 1.6;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  @keyframes upIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .text1, .text2 {
+    color: #d9251d;
+    opacity: 0;
+  }
+  .text1 { font-size: 20px; margin-bottom: 12px; }
+  .text2 { font-size: 30px; font-weight: bold; line-height: 1.4; }
+  .text1.show { animation: upIn 0.8s ease forwards; }
+  .text2.show { animation: upIn 0.8s ease forwards 0.5s; }
+  .bottom-text.show { opacity: 1; }
+
+  .gray-title, .red-text {
+    font-size: 28px;
+    color: #d9251d;
+    margin-bottom: 20px;
+    font-weight: bold;
+    opacity: 0;
+  }
+  .gray-desc, .red-desc {
+    font-size: 18px;
+    color: #555;
+    opacity: 0;
+  }
+  .gray-title.show, .red-text.show { animation: upIn 0.8s ease forwards; }
+  .gray-desc.show, .red-desc.show { animation: upIn 0.8s ease forwards 0.5s; }
+
+  .gray-footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #d9251d;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 375px) {
+    .ad { width: 100vw; height: 100vh; border-radius: 0; }
+    .choice-box { bottom: 60px; }
+  }
+
+.restart-btn {
+  margin-top: 30px;
+  padding: 12px 30px;
+  background: #d9251d;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s;
+}
+.restart-btn.show {
+  opacity: 1;
+}
+.restart-btn:hover {
+  background: #c01f18;
+}
+</style>
+</head>
+<body>
+
+<div class="ad">
+  <div class="start" id="start">
+    <button id="startBtn">地球online<br>假如有一天你中了大额彩票...</button>
+  </div>
+
+  <div class="theme-bg" id="theme1">🧓<p>你在人来人往的商场外围发现了一个蹒跚的奶奶蹲在路边卖菜。你决定：</p></div>
+  <div class="choice-box" id="choice1">
+    <button class="yes-btn" data-next="theme2" data-res="yes1">假装顺路走过去买下一些菜</button>
+    <button class="no-btn" data-next="theme2" data-res="no1">就当没看到，心里同情同情就好了</button>
+  </div>
+
+  <div class="theme-bg" id="theme2">🦽<p>你饥肠辘辘的来到美食街，发现了一个聋哑人开的小摊。你决定：</p></div>
+  <div class="choice-box" id="choice2">
+    <button class="yes-btn" data-next="theme3" data-res="yes2">反正也不知道吃什么，去尝尝</button>
+    <button class="no-btn" data-next="theme3" data-res="no2">不感兴趣，继续逛逛</button>
+  </div>
+
+  <div class="theme-bg" id="theme3">👶<p>新闻播放福利院简陋环境与孩子们悲惨的过往。你决定：</p></div>
+  <div class="choice-box" id="choice3">
+    <button class="yes-btn" data-next="theme4" data-res="yes3">捐款，尽绵薄之力</button>
+    <button class="no-btn" data-next="theme4" data-res="no3">不捐，反正总有人会捐</button>
+  </div>
+
+  <div class="theme-bg" id="theme4">🤝<p>回家路上看到天桥下翻垃圾桶的大爷。你决定：</p></div>
+  <div class="choice-box" id="choice4">
+    <button class="yes-btn" data-next="end" data-res="yes4">给他买点吃的用的，并报警送至救助站</button>
+    <button class="no-btn" data-next="end" data-res="no4">怕被缠上，赶紧走</button>
+  </div>
+
+  <div class="result-card" id="yes1"><p>好吃的青菜<br>社会名誉+50 满足感+50</p></div>
+  <div class="result-card" id="yes2"><p>一份美食<br>饱腹感+70 愉悦+50</p></div>
+  <div class="result-card" id="yes3"><p>孩子们的感谢信<br>社会名誉+50 温暖+30</p></div>
+  <div class="result-card" id="yes4"><p>热心市民称号<br>责任感+50 感激+100</p></div>
+
+  <div class="result-card" id="no1"><p>金钱-0<br>不安+10</p></div>
+  <div class="result-card" id="no2"><p>金钱-0<br>饥饿感+50</p></div>
+  <div class="result-card" id="no3"><p>金钱-0<br>冷漠+1</p></div>
+  <div class="result-card" id="no4"><p>金钱-0<br>情绪低落+20</p></div>
+
+  <div class="end-screen" id="end">
+    <div class="text1">中国福利彩票｜大广赛</div>
+    <div class="text2">为社会造福，为生活添彩</div>
+    <button class="restart-btn" id="restartBtn">重新开始</button>
+    <div class="bottom-text">
+      <div>作者：王丽岚</div>
+      <div>指导老师：王涛</div>
+      <div>技术辅助：网络、豆包</div>
+    </div>
+  </div>
+
+  <div class="end-gray" id="endGray">
+    <div class="gray-title">善意，从来都不晚</div>
+    <div class="gray-desc">
+      生活节奏很快，每个人都有自己的顾虑与选择<br><br>
+      不必自责，也无需勉强<br>
+      善良从来不是压力，而是发自内心的温柔<br><br>
+      愿你在未来的某一天<br>
+      愿意伸出手，温暖自己，也照亮他人
+    </div>
+    <div class="gray-footer">
+      中国福利彩票<br>为社会造福，为生活添彩
+    </div>
+  </div>
+
+  <div class="end-red" id="endRed">
+    <div class="red-text">感谢你选择了善良</div>
+    <div class="red-desc">
+      这些选择就是<br>你自己最好的模样<br><br>
+      卖菜的奶奶，也许是与小时候的你相识的长辈<br>
+      聋哑的摊主，也许是曾经帮助过你的陌生人<br>
+      福利院的孩子，也许曾与你在社区中匆匆见过一面，那时你也曾看着他们感慨时光匆匆<br>
+      流浪的大爷，也许你曾帮他的家属祈祷与转发那则寻人启事<br><br>
+      你帮助的从来不是陌生人<br>
+      而是未来每一个脆弱、无助、需要被温柔以待的<br>
+      你自己
+    </div>
+    <div class="gray-footer">
+      中国福利彩票<br>为社会造福，为生活添彩
+    </div>
+  </div>
+</div>
+<script>
+  const startEl = document.getElementById('start');
+  const startBtnEl = document.getElementById('startBtn');
+  const endEl = document.getElementById('end');
+  const endGrayEl = document.getElementById('endGray');
+  const endRedEl = document.getElementById('endRed');
+  const text1El = document.querySelector('.text1');
+  const text2El = document.querySelector('.text2');
+  const bottomTextEl = document.querySelector('.bottom-text');
+  const grayTitle = document.querySelector('.gray-title');
+  const grayDesc = document.querySelector('.gray-desc');
+  const redText = document.querySelector('.red-text');
+  const redDesc = document.querySelector('.red-desc');
+
+  let currentTheme = null;
+  let currentChoice = null;
+  let isAnimating = false;
+  let hasChooseNo = false;
+
+  startBtnEl.addEventListener('click', () => {
+    if (isAnimating) return;
+    isAnimating = true;
+    startEl.style.opacity = 0;
+    startEl.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      startEl.style.display = 'none';
+      showTheme('theme1', 'choice1');
+      isAnimating = false;
+    }, 500);
+  });
+
+  function showTheme(themeId, choiceId) {
+    if (currentTheme) currentTheme.style.display = 'none';
+    if (currentChoice) currentChoice.style.display = 'none';
+    currentTheme = document.getElementById(themeId);
+    currentChoice = document.getElementById(choiceId);
+    currentTheme.style.display = 'flex';
+    currentChoice.style.display = 'flex';
+  }
+
+  document.querySelectorAll('.yes-btn, .no-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      const nextThemeId = this.dataset.next;
+      const resId = this.dataset.res;
+      const resCardEl = document.getElementById(resId);
+
+      if (this.classList.contains('no-btn')) {
+        hasChooseNo = true;
+      }
+
+      currentChoice.style.opacity = 0;
+      setTimeout(() => {
+        currentChoice.style.display = 'none';
+        resCardEl.style.display = 'flex';
+        isAnimating = false;
+      }, 300);
+
+      resCardEl.addEventListener('click', () => {
+        resCardEl.style.display = 'none';
+        if (nextThemeId === 'end') {
+          if (hasChooseNo) {
+            endGrayEl.style.display = 'flex';
+            grayTitle.classList.add('show');
+            setTimeout(()=>{grayDesc.classList.add('show');},500);
+          } else {
+            endRedEl.style.display = 'flex';
+            redText.classList.add('show');
+            setTimeout(()=>{redDesc.classList.add('show');},500);
+          }
+        } else {
+          showTheme(nextThemeId, 'choice' + nextThemeId.slice(-1));
+        }
+      }, { once: true });
+    });
+  });
+
+  endGrayEl.addEventListener('click', () => {
+    endGrayEl.style.display = 'none';
+    endEl.style.display = 'flex';
+  });
+
+  endRedEl.addEventListener('click', () => {
+    endRedEl.style.display = 'none';
+    endEl.style.display = 'flex';
+  });
+
+  endEl.addEventListener('click', () => {
+    if (text1El.classList.contains('show')) return;
+    text1El.classList.add('show');
+    setTimeout(() => {
+      text2El.classList.add('show');
+      setTimeout(() => bottomTextEl.classList.add('show'), 1000);
+    }, 800);
+  });
+const restartBtn = document.getElementById('restartBtn');
+
+endEl.addEventListener('click', () => {
+  setTimeout(() => {
+    restartBtn.classList.add('show');
+  }, 1500);
+});
+
+restartBtn.addEventListener('click', () => {
+  location.reload();
+});
+</script>
+</body>
+</html>

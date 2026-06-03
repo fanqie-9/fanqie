@@ -77,7 +77,6 @@
     padding: 0 20px;
     text-align: center;
     animation: fadeIn 0.5s ease forwards;
-    transition: background-color 0.7s ease;
   }
   .theme-bg p {
     font-size: 24px;
@@ -191,7 +190,6 @@
     line-height: 1.8;
     color: #444;
     cursor: pointer;
-    transition: background-color 0.7s ease;
   }
 
   .end-red {
@@ -211,7 +209,6 @@
     line-height: 1.4;
     color: #333;
     cursor: pointer;
-    transition: background-color 0.7s ease;
   }
 
   .bottom-text {
@@ -278,6 +275,7 @@
 .red-desc > div:nth-child(8){animation: upIn 0.6s ease forwards 6.6s;}
 .red-desc > div:nth-child(9){animation: upIn 0.6s ease forwards 7.5s;}
 .red-desc > div:nth-child(10){animation: upIn 0.6s ease forwards 8.4s;}
+.red-desc > div:nth-child(11){animation: upIn 0.6s ease forwards 9.3s;}
 
 .gray-desc > div{
     opacity:0;
@@ -330,6 +328,26 @@
 }
 .restart-btn:hover {
   background: #c01f18;
+}
+.top-animate{
+  position:absolute;
+  top:12px;
+  left:0;
+  width:100%;
+  height:55px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  pointer-events:none;
+  z-index:99;
+}
+.top-animate span{
+  font-size:24px;
+  animation: updown 3s infinite ease-in-out;
+}
+@keyframes updown {
+  0%,100%{transform: translateY(0);opacity:0.6;}
+  50%{transform: translateY(-15px);opacity:1;}
 }
 </style>
 </head>
@@ -439,7 +457,6 @@
   let currentChoice = null;
   let isAnimating = false;
   let hasChooseNo = false;
-  let mood = 0;
 
   startBtnEl.addEventListener('click', () => {
     if (isAnimating) return;
@@ -473,20 +490,6 @@
 
       if (this.classList.contains('no-btn')) {
         hasChooseNo = true;
-        mood--;
-      }else{
-        mood++;
-      }
-      
-      let bg;
-      if(mood >=3){
-        bg = "#ffe3d4";
-      }else if(mood >=1){
-        bg = "#ffe9e0";
-      }else if(mood >=-2){
-        bg = "#f7f7f8";
-      }else{
-        bg = "#eeeeef";
       }
 
       currentChoice.style.opacity = 0;
@@ -502,17 +505,13 @@
           if (hasChooseNo) {
             endGrayEl.style.display = 'flex';
             grayTitle.classList.add('show');
-            endGrayEl.style.backgroundColor = "#eeeeef";
             setTimeout(()=>{grayDesc.classList.add('show');},500);
           } else {
             endRedEl.style.display = 'flex';
             redText.classList.add('show');
-            endRedEl.style.backgroundColor = "#ffe3d4";
             setTimeout(()=>{redDesc.classList.add('show');},500);
           }
         } else {
-          let nextPage = document.getElementById(nextThemeId);
-          nextPage.style.backgroundColor = bg;
           showTheme(nextThemeId, 'choice' + nextThemeId.slice(-1));
         }
       }, { once: true });

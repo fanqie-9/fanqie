@@ -79,11 +79,16 @@
     animation: fadeIn 0.5s ease forwards;
   }
   .theme-bg p {
-    font-size: 26px;
+    font-size: 24px;
     margin-top: 15px;
     color: #333;
     line-height: 1.4;
   }
+.ico{
+    font-size:55px;
+    display:block;
+    margin-bottom:8px;
+}
 
   .choice-box {
     position: absolute;
@@ -250,6 +255,12 @@
     color: #555;
     opacity: 0;
   }
+  .ziji{
+    font-size:30px;
+    font-family:"宋体";
+    color:#000;
+    font-weight:bold;
+  }
   .gray-title.show, .red-text.show { animation: upIn 0.8s ease forwards; }
   .gray-desc.show, .red-desc.show { animation: upIn 0.8s ease forwards 0.5s; }
 
@@ -287,6 +298,7 @@
 .restart-btn:hover {
   background: #c01f18;
 }
+
 </style>
 </head>
 <body>
@@ -296,27 +308,27 @@
     <button id="startBtn">地球online<br>假如有一天你中了大额彩票...</button>
   </div>
 
-  <div class="theme-bg" id="theme1">🧓<p>你在人来人往的商场外围发现了一个蹒跚的奶奶蹲在路边卖菜。你决定：</p></div>
+  <div class="theme-bg" id="theme1"><span class="ico">🧓</span><p>你在人来人往的商场外围发现了一个蹒跚的奶奶蹲在路边卖菜。你决定：</p></div>
   <div class="choice-box" id="choice1">
-    <button class="yes-btn" data-next="theme2" data-res="yes1">假装顺路走过去买下一些菜</button>
-    <button class="no-btn" data-next="theme2" data-res="no1">就当没看到，心里同情同情就好了</button>
+    <button class="yes-btn" data-next="theme2" data-res="yes1">于心不忍，过去买菜</button>
+    <button class="no-btn" data-next="theme2" data-res="no1">心里同情,不做表示</button>
   </div>
 
-  <div class="theme-bg" id="theme2">🦽<p>你饥肠辘辘的来到美食街，发现了一个聋哑人开的小摊。你决定：</p></div>
+  <div class="theme-bg" id="theme2"><span class="ico">🦽</span><p>你饥肠辘辘的来到美食街，发现了一个聋哑人开的小摊。你决定：</p></div>
   <div class="choice-box" id="choice2">
-    <button class="yes-btn" data-next="theme3" data-res="yes2">反正也不知道吃什么，去尝尝</button>
+    <button class="yes-btn" data-next="theme3" data-res="yes2">好奇打量，去尝尝</button>
     <button class="no-btn" data-next="theme3" data-res="no2">不感兴趣，继续逛逛</button>
   </div>
 
-  <div class="theme-bg" id="theme3">👶<p>新闻播放福利院简陋环境与孩子们悲惨的过往。你决定：</p></div>
+  <div class="theme-bg" id="theme3"><span class="ico">👶</span><p>新闻播放福利院简陋环境与孩子们悲惨的过往。你决定：</p></div>
   <div class="choice-box" id="choice3">
     <button class="yes-btn" data-next="theme4" data-res="yes3">捐款，尽绵薄之力</button>
     <button class="no-btn" data-next="theme4" data-res="no3">不捐，反正总有人会捐</button>
   </div>
 
-  <div class="theme-bg" id="theme4">🤝<p>回家路上看到天桥下翻垃圾桶的大爷。你决定：</p></div>
+  <div class="theme-bg" id="theme4"><span class="ico">🤝</span><p>回家路上看到天桥下翻垃圾桶的大爷。你决定：</p></div>
   <div class="choice-box" id="choice4">
-    <button class="yes-btn" data-next="end" data-res="yes4">给他买点吃的用的，并报警送至救助站</button>
+    <button class="yes-btn" data-next="end" data-res="yes4">伸出援手，尽绵薄之力</button>
     <button class="no-btn" data-next="end" data-res="no4">怕被缠上，赶紧走</button>
   </div>
 
@@ -337,18 +349,18 @@
     <div class="bottom-text">
       <div>作者：王丽岚</div>
       <div>指导老师：王涛</div>
-      <div>技术辅助：网络、豆包</div>
+      <div>技术辅助：网络、豆包、GitHub</div>
     </div>
   </div>
 
   <div class="end-gray" id="endGray">
     <div class="gray-title">善意，从来都不晚</div>
     <div class="gray-desc">
-      生活节奏很快，每个人都有自己的顾虑与选择<br><br>
+      生活节奏很快<br>每个人都有自己的顾虑与选择<br><br>
       不必自责，也无需勉强<br>
-      善良从来不是压力，而是发自内心的温柔<br><br>
+      善良从来不是压力<br>而是发自内心的温柔<br><br>
       愿你在未来的某一天<br>
-      愿意伸出手，温暖自己，也照亮他人
+      愿意<br>伸出手<br>温暖自己<br>照亮他人
     </div>
     <div class="gray-footer">
       中国福利彩票<br>为社会造福，为生活添彩
@@ -359,13 +371,13 @@
     <div class="red-text">感谢你选择了善良</div>
     <div class="red-desc">
       这些选择就是<br>你自己最好的模样<br><br>
-      卖菜的奶奶，也许是与小时候的你相识的长辈<br>
-      聋哑的摊主，也许是曾经帮助过你的陌生人<br>
-      福利院的孩子，也许曾与你在社区中匆匆见过一面，那时你也曾看着他们感慨时光匆匆<br>
-      流浪的大爷，也许你曾帮他的家属祈祷与转发那则寻人启事<br><br>
+      卖菜的奶奶<br>也许是与小时候的你相识的长辈<br>
+      聋哑的摊主<br>也许是曾经帮助过你的陌生人<br>
+      福利院的孩子<br>也许曾与你在社区中匆匆见过一面<br>
+      流浪的大爷<br>也许你曾帮他的家属祈祷与转发那则寻人启事<br><br>
       你帮助的从来不是陌生人<br>
-      而是未来每一个脆弱、无助、需要被温柔以待的<br>
-      你自己
+      而是每一个脆弱、无助、需要被温柔以待的<br>
+      <span class="ziji">自己</span>
     </div>
     <div class="gray-footer">
       中国福利彩票<br>为社会造福，为生活添彩
